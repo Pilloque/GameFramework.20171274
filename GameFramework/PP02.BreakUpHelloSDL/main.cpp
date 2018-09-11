@@ -23,7 +23,7 @@ bool init(const char* title, int xpos, int ypos, int width, int height, int flag
 
 void render()
 {
-    SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 255, 255);
     SDL_RenderClear(g_pRenderer);
     SDL_RenderPresent(g_pRenderer);
 }
@@ -36,7 +36,7 @@ bool g_bRunning = false;
 
 int main(int argc, char* argv[])
 {
-    if (init("Chapter 1 : Settting up SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
+    if (init("Game Framework", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_SHOWN))
     {
         g_bRunning = true;
     }
@@ -49,6 +49,10 @@ int main(int argc, char* argv[])
         //handleEvents();
         //update();
         render();
+        if (SDL_GetTicks() > 3000)
+        {
+            g_bRunning = false;
+        }
     }
 
     SDL_Quit();

@@ -30,7 +30,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         m_destinationRectangle.w = m_sourceRectangle.w;
         m_destinationRectangle.h = m_sourceRectangle.h;
 
-        SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+        SDL_SetRenderDrawColor(m_pRenderer, 0, 40, 60, 255);
 
 		m_bRunning = true;
 	}
@@ -50,7 +50,29 @@ void Game::render()
 
 void Game::update()
 {
-    m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    if (state[SDL_SCANCODE_RIGHT] && posx < 500)
+    {
+        posx += 0.1f;
+        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
+    }
+    else if (state[SDL_SCANCODE_LEFT] && posx > 0)
+    {
+        posx -= 0.1f;
+        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
+    }
+    else if (state[SDL_SCANCODE_DOWN] && posy < 480)
+    {
+        posy += 0.1f;
+        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
+    }
+    else if (state[SDL_SCANCODE_UP] && posy > 0)
+    {
+        posy -= 0.1f;
+        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
+    }
+    m_destinationRectangle.x = (int)posx;
+    m_destinationRectangle.y = (int)posy;
 }
 
 void Game::clean()

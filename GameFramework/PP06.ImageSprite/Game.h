@@ -22,6 +22,8 @@ private:
 	SDL_Rect m_sourceRectangle;
 	SDL_Rect m_destinationRectangle;
 	bool m_bRunning;
+
+    float posx = 0.0f, posy = 0.0f;
 };
 
 #endif Game_h

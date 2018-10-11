@@ -20,13 +20,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		}
 
         textureManager->Load("../assets/animate-alpha.png", "animate", pRenderer);
-        sourceRectangle.w = 128;
-        sourceRectangle.h = 82;
-
-        destinationRectangle.x = sourceRectangle.x = 0;
-        destinationRectangle.y = sourceRectangle.y = 0;
-        destinationRectangle.w = sourceRectangle.w;
-        destinationRectangle.h = sourceRectangle.h;
 
         SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
 
@@ -43,7 +36,7 @@ void Game::render()
 {
 	SDL_RenderClear(pRenderer);
     textureManager->Draw("animate", 0, 0, 128, 82, pRenderer);
-    textureManager->DrawFrame("animate", 100, 100, 128, 82, 1, currentFrame, pRenderer);
+    //textureManager->DrawFrame("animate", 300, 300, 128, 82, 1, currentFrame, pRenderer);
 	SDL_RenderPresent(pRenderer);
 }
 

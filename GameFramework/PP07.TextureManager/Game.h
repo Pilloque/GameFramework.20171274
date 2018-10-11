@@ -1,7 +1,11 @@
 #ifndef Game_h
 #define Game_h
-#include "SDL.h"
+#include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
+//#include "TextureManager.h"
+
+class TextureManager;
 
 class Game
 {
@@ -13,17 +17,16 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
-	bool running() { return m_bRunning; }
+	bool running() { return isRunning; }
 
 private:
-	SDL_Window * m_pWindow;
-	SDL_Renderer* m_pRenderer;
-	SDL_Texture* m_pTexture;
-	SDL_Rect m_sourceRectangle;
-	SDL_Rect m_destinationRectangle;
-	bool m_bRunning;
-
-    float posx = 0.0f, posy = 0.0f;
+	SDL_Window * pWindow;
+	SDL_Renderer* pRenderer;
+	SDL_Texture* pTexture;
+	SDL_Rect sourceRectangle;
+	SDL_Rect destinationRectangle;
+    TextureManager* textureManager;
+	bool isRunning;
+    int currentFrame;
 };
-
 #endif Game_h

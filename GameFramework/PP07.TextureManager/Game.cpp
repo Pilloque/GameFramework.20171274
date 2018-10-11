@@ -1,5 +1,5 @@
 #include "Game.h"
-#include <SDL_image.h>
+#include "TextureManager.h"
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
@@ -7,32 +7,30 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		if (fullscreen)
 		{
-			m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_FULLSCREEN_DESKTOP);
 		}
 		else
 		{
-			m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
+			pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
 		}
 
-		if (m_pWindow != 0)
+		if (pWindow != 0)
 		{
-			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
+			pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
 		}
 
-		SDL_Surface* pTempSurface = IMG_Load("../assets/animate-alpha.png");
-		m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-		SDL_FreeSurface(pTempSurface);
-        m_sourceRectangle.w = 128;
-        m_sourceRectangle.h = 82;
+        textureManager->Load("../assets/animate-alpha.png", "animate", pRenderer);
+        sourceRectangle.w = 128;
+        sourceRectangle.h = 82;
 
-        m_destinationRectangle.x = m_sourceRectangle.x = 0;
-        m_destinationRectangle.y = m_sourceRectangle.y = 0;
-        m_destinationRectangle.w = m_sourceRectangle.w;
-        m_destinationRectangle.h = m_sourceRectangle.h;
+        destinationRectangle.x = sourceRectangle.x = 0;
+        destinationRectangle.y = sourceRectangle.y = 0;
+        destinationRectangle.w = sourceRectangle.w;
+        destinationRectangle.h = sourceRectangle.h;
 
-        SDL_SetRenderDrawColor(m_pRenderer, 0, 40, 60, 255);
+        SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
 
-		m_bRunning = true;
+		isRunning = true;
 	}
 	else
 	{
@@ -43,43 +41,22 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 void Game::render()
 {
-	SDL_RenderClear(m_pRenderer);
-	SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
-	SDL_RenderPresent(m_pRenderer);
+	SDL_RenderClear(pRenderer);
+    textureManager->Draw("animate", 0, 0, 128, 82, pRenderer);
+    textureManager->DrawFrame("animate", 100, 100, 128, 82, 1, currentFrame, pRenderer);
+	SDL_RenderPresent(pRenderer);
 }
 
 void Game::update()
 {
-    const Uint8* state = SDL_GetKeyboardState(NULL);
-    if (state[SDL_SCANCODE_RIGHT] && posx < 500)
-    {
-        posx += 0.1f;
-        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
-    }
-    else if (state[SDL_SCANCODE_LEFT] && posx > 0)
-    {
-        posx -= 0.1f;
-        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
-    }
-    else if (state[SDL_SCANCODE_DOWN] && posy < 480)
-    {
-        posy += 0.1f;
-        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
-    }
-    else if (state[SDL_SCANCODE_UP] && posy > 0)
-    {
-        posy -= 0.1f;
-        m_sourceRectangle.x = 128 * int((SDL_GetTicks() / 100) % 6);
-    }
-    m_destinationRectangle.x = (int)posx;
-    m_destinationRectangle.y = (int)posy;
+    currentFrame = int((SDL_GetTicks() / 100) % 6);
 }
 
 void Game::clean()
 {
 	std::cout << "cleaning game\n";
-	SDL_DestroyWindow(m_pWindow);
-	SDL_DestroyRenderer(m_pRenderer);
+	SDL_DestroyWindow(pWindow);
+	SDL_DestroyRenderer(pRenderer);
 	SDL_Quit();
 }
 
@@ -91,7 +68,7 @@ void Game::handleEvents()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			m_bRunning = false;
+			isRunning = false;
 			break;
 		default:
 			break;

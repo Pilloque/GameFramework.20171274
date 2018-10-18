@@ -3,9 +3,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <vector>
-#include "GameObject.h"
-#include "Player.h"
-#include "Enemy.h"
+
+class GameObject;
+class Player;
+class Enemy;
 
 class Game
 {

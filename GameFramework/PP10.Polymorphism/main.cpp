@@ -23,8 +23,8 @@ int main(int argc, char* argv[])
 
 void FrameDelay(int maxFPS)
 {
-    static const int latency = (int)((float)1000 / maxFPS + 0.5);
-    static int frameStart;
+    static const int latency = int((float)1000 / 144 + 0.5f);
+    static unsigned int frameStart;
     static int frameTime;
 
     frameTime = SDL_GetTicks() - frameStart;

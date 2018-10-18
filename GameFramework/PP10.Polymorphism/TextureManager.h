@@ -28,7 +28,4 @@ private:
 
     std::map<std::string, SDL_Texture*> textureMap;
 };
-
-//typedef TextureManager TheTextureManager;
-//코드가 더러워지는 것 같아서 지웠습니다.
 #endif

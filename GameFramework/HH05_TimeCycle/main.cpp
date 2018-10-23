@@ -7,7 +7,7 @@ Game* g_game = 0;
 int main(int argc, char* argv[])
 {
     g_game = new Game();
-    g_game->Init("PP10.Polymorphism", 100, 100, 640, 480, false);
+    g_game->Init("HH05", 100, 100, 640, 480, false);
 
     while (g_game->Running())
     {
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
         g_game->Update();
         g_game->Render();
 
-        FrameDelay(144);
+        FrameDelay(60);
     }
     g_game->Clean();
     return 0;
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 
 void FrameDelay(int maxFPS)
 {
-    static const int latency = int((float)1000 / 144 + 0.5f);
+    static const int latency = int((float)1000 / maxFPS + 0.5f);
     static unsigned int frameStart;
     static int frameTime;
 

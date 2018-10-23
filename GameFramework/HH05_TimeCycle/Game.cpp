@@ -31,9 +31,10 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
 
         monsterFast = new Monster();
         monsterSlow = new Monster();
-
-        monsterFast->Load(100, 100, 120, 181, "mushroom");
-        monsterSlow->Load(100, 300, 120, 181, "mushroom");
+        monsterFast->Load(100, 50, 120, 181, "mushroom");
+        monsterSlow->Load(100, 200, 120, 181, "mushroom");
+        monsterFast->SetVelocity(2);
+        monsterSlow->SetVelocity(1);
 
         gameObjects.push_back(monsterFast);
         gameObjects.push_back(monsterSlow);

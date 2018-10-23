@@ -9,7 +9,7 @@ void GameObject::Load(int x, int y, int width, int height, std::string textureID
     this->height = height;
     this->textureID = textureID;
     this->currentRow = 1;
-    this->currentFrame = 1;
+    this->currentFrame = 0;
 }
 
 void GameObject::Draw(SDL_Renderer* pRenderer)

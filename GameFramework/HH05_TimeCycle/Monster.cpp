@@ -8,16 +8,16 @@ void Monster::Draw(SDL_Renderer* pRenderer)
 
 void Monster::Update()
 {
-    if (SDL_GetTicks() > nextShift)
+    if (SDL_GetTicks() > nextTurn)
     {
-        x = -x;
-        nextShift = SDL_GetTicks() + directionCycle;
+        xvel = -xvel;
+        nextTurn = SDL_GetTicks() + turnCycle;
     }
     x += xvel;
-    currentFrame = int((SDL_GetTicks() / 100) % 6);
+    currentFrame = int((SDL_GetTicks() / 100) % 4);
 }
 
 void Monster::SetVelocity(int vel)
 {
-    this->xvel = vel;
+    this->xvel = (-1) * vel;
 }

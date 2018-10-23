@@ -10,8 +10,8 @@ public:
     void SetVelocity(int vel);
 
 private:
-    const int directionCycle = 2000;
-    unsigned int nextShift;
+    const int turnCycle = 400;
+    int displacement;
     int xvel = 1;
 };
 

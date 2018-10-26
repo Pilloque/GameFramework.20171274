@@ -5,7 +5,6 @@
 class Monster : public GameObject
 {
 public:
-    void Draw(SDL_Renderer* pRenderer);
     void Update();
     void SetVelocity(int vel);
 
@@ -14,6 +13,4 @@ private:
     int displacement;
     int xvel = 1;
 };
-
-
 #endif

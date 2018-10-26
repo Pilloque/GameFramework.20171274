@@ -1,11 +1,6 @@
 #include "Monster.h"
 #include "TextureManager.h"
 
-void Monster::Draw(SDL_Renderer* pRenderer)
-{
-    TextureManager::Instance()->DrawFrame(textureID, x, y, width, height, currentRow, currentFrame, pRenderer);
-}
-
 void Monster::Update()
 {
     if (SDL_GetTicks() > nextTurn)

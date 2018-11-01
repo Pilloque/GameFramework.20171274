@@ -6,7 +6,7 @@ void FrameDelay(int maxFPS);
 int main(int argc, char* argv[])
 {
     std::cout << "Game init attempt..." << std::endl;
-    if (Game::Instance()->Init("PP13.KInputHandler", 100, 100, 640, 480, false))
+    if (Game::Instance()->Init("PP14.MInputHandler", 100, 100, 640, 480, false))
     {
         std::cout << "Game init success!\n";
         while (Game::Instance()->Running())

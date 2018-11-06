@@ -1,17 +1,29 @@
 #include "Hoseo.h"
 #include "InputHandler.h"
-#define PI 3.1415926535897932384626433832795
+#include "TextureManager.h"
+#include "Game.h"
 
-Hoseo::Hoseo(const LoaderParams* pParams, float speed, float direction) : SDLGameObject(pParams)
+Hoseo::Hoseo(const LoaderParams* pParams, Vector2D mousePos, float speed) : SDLGameObject(pParams)
 {
+    Vector2D direction = mousePos - Vector2D(pParams->GetWidth() / 2, pParams->GetHeight() / 2) - this->position;
+    direction.Normalize();
+    velocity = direction * speed;
+}
 
-    velocity = Vector2D(speed * SDL_cos(direction * PI / 180), speed * SDL_sin(direction * PI / 180));
+void Hoseo::Draw()
+{
+    TextureManager::Instance()->Draw(textureID, int(position.GetX() + 0.5), int(position.GetY() + 0.5), width, height, Game::Instance()->GetRenderer());
 }
 
 void Hoseo::Update()
 {
     //HandleInput();
     SDLGameObject::Update();
+    if (this->position.GetX() > 640 || this->position.GetY() > 480
+        || this->position.GetX() < 0 || this->position.GetY() < 0)
+    {
+        //Object »èÁ¦
+    }
 }
 
 void Hoseo::Clean()

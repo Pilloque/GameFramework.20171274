@@ -20,6 +20,7 @@ public:
         return pInstance;
     }
 	bool Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+    void GenerateObject(GameObject* gameObj);
 	void Render();
 	void Update();
 	void HandleEvents();

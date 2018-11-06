@@ -21,9 +21,9 @@ void Enemy::Clean()
 void Enemy::HandleInput()
 {
     Vector2D* vec = InputHandler::Instance()->GetMousePosition();
-    velocity = (*vec - position) / 100;
+    velocity = ((*vec - Vector2D(width / 2, height / 2)) - position) / 50;
     if (InputHandler::Instance()->GetMouseButtonState(LEFT))
     {
-        velocity += Vector2D(5.0f, 0.0f);
+        velocity += Vector2D(1.0f, 0.0f);
     }
 }

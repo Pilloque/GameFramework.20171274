@@ -33,9 +33,13 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
         {
             return false;
         }
+        if (!TextureManager::Instance()->Load("../assets/hoseo.png", "hoseo", pRenderer))
+        {
+            return false;
+        }
 
-        gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-        gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
+        GenerateObject(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
+        GenerateObject(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
         SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
 
@@ -45,6 +49,11 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
         return false;
     }
     return true;
+}
+
+void Game::GenerateObject(GameObject* gameObj)
+{
+    gameObjects.push_back(gameObj);
 }
 
 void Game::Render()

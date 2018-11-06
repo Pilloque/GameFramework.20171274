@@ -27,12 +27,13 @@ void TextureManager::Draw(std::string id, int x, int y, int width, int height, S
     SDL_Rect srcRect;
     SDL_Rect dstRect;
 
+    SDL_QueryTexture(textureMap[id], NULL, NULL, &srcRect.w, &srcRect.h);
     srcRect.x = 0;
     srcRect.y = 0;
     dstRect.x = x;
     dstRect.y = y;
-    srcRect.w = dstRect.w = width;
-    srcRect.h = dstRect.h = height;
+    dstRect.w = width;
+    dstRect.h = height;
 
     SDL_RenderCopyEx(pRenderer, textureMap[id], &srcRect, &dstRect, 0, 0, flip);
 }

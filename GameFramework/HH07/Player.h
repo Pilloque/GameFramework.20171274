@@ -2,6 +2,7 @@
 #define Player_h
 #include "SDLGameObject.h"
 #include "LoaderParams.h"
+#include <vector>
 
 class Player : public SDLGameObject
 {
@@ -11,7 +12,8 @@ public:
     virtual void Clean();
 private:
     void HandleInput();
-    std::vector<GameObject*> balls;
+    Uint32 nextFire = 0;
+    const Uint32 fireRate = 500;
 };
 
 

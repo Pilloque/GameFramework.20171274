@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Player.h"
-#include "Enemy.h"
+#include "Box.h"
 #include "LoaderParams.h"
 #include "InputHandler.h"
 #include <iostream>
@@ -37,9 +37,13 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
         {
             return false;
         }
+        if (!TextureManager::Instance()->Load("../assets/box.png", "box", pRenderer))
+        {
+            return false;
+        }
 
         GenerateObject(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-        GenerateObject(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
+        GenerateObject(new Box(new LoaderParams(500, 100, 100, 100, "box")));
 
         SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
 
@@ -56,6 +60,13 @@ void Game::GenerateObject(GameObject* gameObj)
     gameObjects.push_back(gameObj);
 }
 
+void Game::DestroyObject(GameObject* gameObj)
+{
+    std::vector<GameObject*>::iterator it;
+    it = find(gameObjects.begin(), gameObjects.end(), gameObj);
+    gameObjects.erase(it);
+}
+
 void Game::Render()
 {
     SDL_RenderClear(pRenderer);
@@ -68,9 +79,12 @@ void Game::Render()
 
 void Game::Update()
 {
-    for (std::vector<GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+    for (std::vector<GameObject*>::size_type i = 0; i < gameObjects.size(); i++)
     {
-        gameObjects[i]->Update();
+        if (gameObjects[i]->Update())
+        {
+            i--;
+        }
     }
 }
 

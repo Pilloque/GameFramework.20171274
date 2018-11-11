@@ -5,9 +5,6 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TextureManager.cpp" />
-    <ClCompile Include="Enemy.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -17,15 +14,15 @@
     <ClCompile Include="Hoseo.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Vector2D.h" />
-    <ClInclude Include="Enemy.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
@@ -39,6 +36,9 @@
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Hoseo.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

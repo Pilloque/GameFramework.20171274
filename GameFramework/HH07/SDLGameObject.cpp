@@ -17,10 +17,12 @@ void SDLGameObject::Draw()
     TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() + 0.5), int(position.GetY() + 0.5), width, height, currentRow, currentFrame, Game::Instance()->GetRenderer());
 }
 
-void SDLGameObject::Update()
+int SDLGameObject::Update()
 {
     velocity += acceleration;
     position += velocity;
+    
+    return 0;
 }
 
 void SDLGameObject::Clean()

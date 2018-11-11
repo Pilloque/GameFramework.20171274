@@ -7,12 +7,14 @@ Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
 {
 }
 
-void Player::Update()
+int Player::Update()
 {
     velocity = Vector2D(0.0f, 0.0f);
     HandleInput();
     currentFrame = int((SDL_GetTicks() / 100) % 6);
     SDLGameObject::Update();
+
+    return 0;
 }
 
 void Player::Clean()
@@ -41,7 +43,7 @@ void Player::HandleInput()
     {
         if (SDL_GetTicks() > nextFire)
         {
-            Game::Instance()->GenerateObject(new Hoseo(new LoaderParams(position.GetX(), position.GetY(), 100, 100, "hoseo"), *InputHandler::Instance()->GetMousePosition(), 10.0f));
+            Game::Instance()->GenerateObject(new Hoseo(new LoaderParams(position.GetX(), position.GetY(), 100, 100, "hoseo"), *InputHandler::Instance()->GetMousePosition(), fireSpeed));
             nextFire = SDL_GetTicks() + fireRate;
         }
     }

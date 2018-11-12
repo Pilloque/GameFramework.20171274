@@ -17,7 +17,6 @@ void Hoseo::Draw()
 
 int Hoseo::Update()
 {
-    //HandleInput();
     SDLGameObject::Update();
     if (this->position.GetX() > 640 || this->position.GetY() > 480
         || this->position.GetX() < 0 || this->position.GetY() < 0)

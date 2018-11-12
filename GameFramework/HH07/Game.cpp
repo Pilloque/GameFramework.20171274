@@ -46,7 +46,9 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
         GenerateObject(new Player(new LoaderParams(100, 100, 128, 82, "animate", "player")));
         GenerateObject(new Box(new LoaderParams(500, 50, 100, 100, "box", "box")));
         GenerateObject(new Box(new LoaderParams(500, 200, 100, 100, "box", "box")));
-        GenerateObject(new Box(new LoaderParams(500, 350, 100, 100, "box", "box")));
+        GenerateObject(new Box(new LoaderParams(350, 350, 100, 100, "box", "box")));
+        GenerateObject(new Box(new LoaderParams(200, 350, 100, 100, "box", "box")));
+        GenerateObject(new Box(new LoaderParams(50, 350, 100, 100, "box", "box")));
 
         SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
 
@@ -65,6 +67,7 @@ void Game::GenerateObject(GameObject* gameObj)
 
 void Game::DestroyObject(GameObject* gameObj)
 {
+    std::cout << "오브젝트 제거됨\n";
     std::vector<GameObject*>::iterator it;
     it = find(gameObjects.begin(), gameObjects.end(), gameObj);
     gameObjects.erase(it);

@@ -1,8 +1,6 @@
 #ifndef SDLGameObject_h
 #define SDLGameObject_h
 #include "GameObject.h"
-#include "Vector2D.h"
-#include <string>
 
 class SDLGameObject : public GameObject
 {
@@ -11,6 +9,12 @@ public:
     virtual void Draw();
     virtual int Update();
     virtual void Clean();
+    virtual int OnCollision(const GameObject& collider);
+
+    virtual Vector2D GetPosition() const { return position; }
+    virtual int GetWidth() const { return width; }
+    virtual int GetHeight() const { return height; }
+    virtual std::string GetTag() const { return tag; }
 
 protected:
     Vector2D position;
@@ -21,6 +25,7 @@ protected:
     int currentRow;
     int currentFrame;
     std::string textureID;
+    std::string tag;
 
     
 };

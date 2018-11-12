@@ -9,6 +9,7 @@ public:
     Box(const LoaderParams* pParams);
     virtual int Update();
     virtual void Clean();
+    virtual int OnCollision(const GameObject& collider);
 
 private:
 };

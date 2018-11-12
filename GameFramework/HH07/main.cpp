@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
         std::cout << "Game init success!\n";
         while (Game::Instance()->Running())
         {
+            Game::Instance()->CheckCollision();
             Game::Instance()->HandleEvents();
             Game::Instance()->Update();
             Game::Instance()->Render();

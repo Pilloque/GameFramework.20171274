@@ -5,6 +5,7 @@
 #include "Box.h"
 #include "LoaderParams.h"
 #include "InputHandler.h"
+#include "Collision.h"
 #include <iostream>
 
 Game* Game::pInstance = 0;
@@ -42,8 +43,10 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
             return false;
         }
 
-        GenerateObject(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
-        GenerateObject(new Box(new LoaderParams(500, 100, 100, 100, "box")));
+        GenerateObject(new Player(new LoaderParams(100, 100, 128, 82, "animate", "player")));
+        GenerateObject(new Box(new LoaderParams(500, 50, 100, 100, "box", "box")));
+        GenerateObject(new Box(new LoaderParams(500, 200, 100, 100, "box", "box")));
+        GenerateObject(new Box(new LoaderParams(500, 350, 100, 100, "box", "box")));
 
         SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
 
@@ -79,12 +82,15 @@ void Game::Render()
 
 void Game::Update()
 {
-    for (std::vector<GameObject*>::size_type i = 0; i < gameObjects.size(); i++)
+    std::vector<GameObject*>::size_type i = 0;
+    while (i < gameObjects.size())
     {
         if (gameObjects[i]->Update())
         {
-            i--;
+            continue;
         }
+
+        i++;
     }
 }
 
@@ -96,4 +102,25 @@ void Game::Clean()
 void Game::HandleEvents()
 {
     InputHandler::Instance()->Update();
+}
+
+void Game::CheckCollision()
+{
+    for (std::vector<GameObject*>::size_type i = 0; i < gameObjects.size() - 1; i++)
+    {
+        std::vector<GameObject*>::size_type j = i + 1;
+        while (j < gameObjects.size())
+        {
+            if (Collision::AABB(*gameObjects[i],*gameObjects[j]))
+            {
+                if (gameObjects[i]->OnCollision(*gameObjects[j])
+                    || gameObjects[j]->OnCollision(*gameObjects[i]))
+                {
+                    continue;
+                }
+            }
+
+            j++;
+        }
+    }
 }

@@ -24,8 +24,9 @@ public:
     void DestroyObject(GameObject* gameObj);
 	void Render();
 	void Update();
-	void HandleEvents();
 	void Clean();
+	void HandleEvents();
+    void CheckCollision();
 	bool Running() { return isRunning; }
     void Quit() { isRunning = false; }
     

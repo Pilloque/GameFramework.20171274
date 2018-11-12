@@ -11,10 +11,10 @@ public:
     virtual int Update();
     virtual void Clean();
 private:
-    const float fireSpeed = 10.0f;
+    const float fireSpeed = 8.0f;
     void HandleInput();
     Uint32 nextFire = 0;
-    const Uint32 fireRate = 500;
+    const Uint32 fireRate = 300;
 };
 
 

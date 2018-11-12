@@ -8,6 +8,7 @@ SDLGameObject::SDLGameObject(const LoaderParams* pParams) : GameObject(pParams),
     this->width = pParams->GetWidth();
     this->height = pParams->GetHeight();
     this->textureID = pParams->GetTextureID();
+    this->tag = pParams->GetTag();
     this->currentRow = 1;
     this->currentFrame = 0;
 }
@@ -27,4 +28,9 @@ int SDLGameObject::Update()
 
 void SDLGameObject::Clean()
 {
+}
+
+int SDLGameObject::OnCollision(const GameObject& collider)
+{
+    return 0;
 }

@@ -41,6 +41,7 @@
     <ClInclude Include="Box.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">

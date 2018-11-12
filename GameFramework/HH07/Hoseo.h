@@ -10,6 +10,8 @@ public:
     virtual void Draw();
     virtual int Update();
     virtual void Clean();
+    virtual int OnCollision(const GameObject& collider);
+
 private:
     void HandleInput();
 };

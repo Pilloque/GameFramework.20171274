@@ -43,7 +43,7 @@ void Player::HandleInput()
     {
         if (SDL_GetTicks() > nextFire)
         {
-            Game::Instance()->GenerateObject(new Hoseo(new LoaderParams(position.GetX(), position.GetY(), 100, 100, "hoseo"), *InputHandler::Instance()->GetMousePosition(), fireSpeed));
+            Game::Instance()->GenerateObject(new Hoseo(new LoaderParams(position.GetX(), position.GetY(), 100, 100, "hoseo", "hoseo"), *InputHandler::Instance()->GetMousePosition(), fireSpeed));
             nextFire = SDL_GetTicks() + fireRate;
         }
     }

@@ -33,7 +33,17 @@ void Hoseo::Clean()
 {
 }
 
+int Hoseo::OnCollision(const GameObject& collider)
+{
+    if (collider.GetTag() == "box")
+    {
+        Game::Instance()->DestroyObject(this);
+        delete this;
+        return 1;
+    }
+    return 0;
+}
+
 void Hoseo::HandleInput()
 {
-
 }

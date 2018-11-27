@@ -4,7 +4,8 @@ void GameStateMachine::ChangeState(GameState *pState)
 {
     if (pState != NULL)
     {
-        if (currentState != NULL) {
+        if (currentState != NULL)
+        {
             prevState = currentState;
             currentState->OnExit();
         }
@@ -18,7 +19,6 @@ void GameStateMachine::PushState(GameState *pState)
     gameStates.push_back(pState);
     gameStates.back()->OnEnter();
 }
-
 
 void GameStateMachine::PopState()
 {

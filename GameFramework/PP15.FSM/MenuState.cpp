@@ -2,7 +2,6 @@
 #include <iostream>
 
 MenuState* MenuState::pInstance = nullptr;
-
 const std::string MenuState::menuID = "MENU";
 
 void MenuState::Update()

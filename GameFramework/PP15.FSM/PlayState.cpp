@@ -8,10 +8,12 @@ void PlayState::Update()
 {
     // nothing for now
 }
+
 void PlayState::Render()
 {
     // nothing for now
 }
+
 bool PlayState::OnEnter()
 {
     std::cout << "entering PlayState\n";

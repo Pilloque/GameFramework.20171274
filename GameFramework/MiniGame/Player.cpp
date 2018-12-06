@@ -48,6 +48,5 @@ void Player::HandleInput()
         direction.SetY(1.0f);
     }
     velocity += direction.Normalized() * speed;
-    std::cout << velocity.GetX() << ", " << velocity.GetY() << std::endl;
     velocity *= 0.92f;
 }

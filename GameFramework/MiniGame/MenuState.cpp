@@ -18,8 +18,8 @@ bool MenuState::OnEnter()
     {
         return false;
     }
-    GameObject* button1 = new MenuButton(new LoaderParams(100, 100, 400, 100, "playbutton"), MenuToPlay);
-    GameObject* button2 = new MenuButton(new LoaderParams(100, 300, 400, 100, "exitbutton"), ExitFromMenu);
+    GameObject* button1 = new MenuButton(new LoaderParams(720 / 2 - 200, 100, 400, 100, "playbutton"), MenuToPlay);
+    GameObject* button2 = new MenuButton(new LoaderParams(720 / 2 - 200, 300, 400, 100, "exitbutton"), ExitFromMenu);
     gameObjects.push_back(button1);
     gameObjects.push_back(button2);
     std::cout << "entering MenuState\n";

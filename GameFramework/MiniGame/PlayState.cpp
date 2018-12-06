@@ -16,6 +16,7 @@ void PlayState::Update()
     if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_ESCAPE))
     {
         Game::Instance()->GetStateMachine()->ChangeState(PauseState::Instance());
+        return;
     }
     for (std::vector<GameObject*>::size_type i = 0; i < gameObjects.size(); i++)
     {
@@ -37,12 +38,13 @@ bool PlayState::OnEnter()
     {
         return false;
     }
+    if (!TextureManager::Instance()->Load("../assets/missile.png", "missile", Game::Instance()->GetRenderer()))
+    {
+        return false;
+    }
 
-    GameObject* player = new Player(new LoaderParams(100, 100, 128, 55, "helicopter"));
-    GameObject* enemy = new Enemy(new LoaderParams(300, 300, 128, 55, "helicopter2"));
-
-    gameObjects.push_back(player);
-    gameObjects.push_back(enemy);
+    gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 55, "helicopter")));
+    gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 55, "helicopter2")));
 
     std::cout << "entering PlayState\n";
 

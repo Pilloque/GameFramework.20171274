@@ -36,7 +36,6 @@ private:
 	SDL_Renderer* pRenderer;
 	bool running;
 
-    std::vector<GameObject*> gameObjects;
     GameStateMachine* pGameStateMachine;
 };
 

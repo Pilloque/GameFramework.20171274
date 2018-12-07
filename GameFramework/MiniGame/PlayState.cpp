@@ -42,9 +42,15 @@ bool PlayState::OnEnter()
     {
         return false;
     }
+    if (!TextureManager::Instance()->Load("../assets/aim.png", "aim", Game::Instance()->GetRenderer()))
+    {
+        return false;
+    }
 
     gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 55, "helicopter")));
     gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 55, "helicopter2")));
+
+    SDL_ShowCursor(SDL_DISABLE);
 
     std::cout << "entering PlayState\n";
 
@@ -60,6 +66,9 @@ bool PlayState::OnExit()
     gameObjects.clear();
 
     TextureManager::Instance()->ClearFromTextureMap("helicopter");
+
+    SDL_ShowCursor(SDL_ENABLE);
+
     std::cout << "exiting PlayState\n";
 
     return true;

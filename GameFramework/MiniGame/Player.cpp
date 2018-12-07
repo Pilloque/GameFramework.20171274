@@ -26,24 +26,22 @@ void Player::Clean()
 
 void Player::HandleInput()
 {
-    //Vector2D target = InputHandler::Instance()->GetMousePosition();
-    //velocity = (target - position) / 50;
     Vector2D direction;
 
-    if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_RIGHT))
+    if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_RIGHT) || InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_D))
     {
         direction.SetX(1.0f);
     }
-    else if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_LEFT))
+    else if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_LEFT) || InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_A))
     {
         direction.SetX(-1.0f);
     }
 
-    if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_UP))
+    if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_UP) || InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_W))
     {
         direction.SetY(-1.0f);
     }
-    else if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_DOWN))
+    else if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_DOWN) || InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_S))
     {
         direction.SetY(1.0f);
     }

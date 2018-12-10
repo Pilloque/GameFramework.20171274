@@ -11,8 +11,7 @@ public:
     virtual void Clean() = 0;
 
 protected:
-    GameObject(const LoaderParams* pParams) {}
-    virtual ~GameObject() {}
+    GameObject(const LoaderParams& pParams) {}
 };
 
 #endif

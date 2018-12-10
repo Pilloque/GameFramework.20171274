@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "InputHandler.h"
 
-Enemy::Enemy(const LoaderParams* pParams) : SDLGameObject(pParams)
+Enemy::Enemy(const LoaderParams& pParams) : SDLGameObject(pParams)
 {
     velocity.SetX(0.001f);
     velocity.SetY(2);
@@ -14,7 +14,7 @@ void Enemy::Draw()
 
 void Enemy::Update()
 {
-    currentFrame = int(((SDL_GetTicks() / 100) % numFrames));
+    currentFrame = int(((SDL_GetTicks() / 100) % 5));
     if (position.GetY() < 0)
     {
         velocity.SetY(2);

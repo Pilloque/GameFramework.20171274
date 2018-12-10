@@ -1,7 +1,7 @@
 #include "Background.h"
 #include "Camera.h"
 
-Background::Background(const LoaderParams* pParams) : SDLGameObject(pParams)
+Background::Background(const LoaderParams& pParams) : SDLGameObject(pParams)
 {
 }
 

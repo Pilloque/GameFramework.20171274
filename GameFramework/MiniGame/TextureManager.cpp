@@ -40,8 +40,8 @@ void TextureManager::Draw(std::string id, int x, int y, int width, int height, f
 
     srcRect.w = width;
     srcRect.h = height;
-    dstRect.w = width * scale;
-    dstRect.h = height * scale;
+    dstRect.w = int (width * scale);
+    dstRect.h = int (height * scale);
 
     SDL_RenderCopyEx(Game::Instance()->GetRenderer(), textureMap[id], &srcRect, &dstRect, angle, 0, flip);
 }
@@ -58,13 +58,14 @@ void TextureManager::DrawFrame(std::string id, int x, int y, int width, int heig
 
     srcRect.w = width;
     srcRect.h = height;
-    dstRect.w = width * scale;
-    dstRect.h = height * scale;
+    dstRect.w = int (width * scale);
+    dstRect.h = int (height * scale);
 
     SDL_RenderCopyEx(Game::Instance()->GetRenderer(), textureMap[id], &srcRect, &dstRect, 0, 0, flip);
 }
 
 void TextureManager::ClearFromTextureMap(std::string id)
 {
+    SDL_DestroyTexture(textureMap[id]);
     textureMap.erase(id);
 }

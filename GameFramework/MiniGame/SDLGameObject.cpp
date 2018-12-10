@@ -2,14 +2,14 @@
 #include "TextureManager.h"
 #include "Camera.h"
 
-SDLGameObject::SDLGameObject(const LoaderParams* pParams) : GameObject(pParams), position(float(pParams->GetX()), float(pParams->GetY())), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f)
+SDLGameObject::SDLGameObject(const LoaderParams& pParams) : GameObject(pParams), position(float(pParams.GetX()), float(pParams.GetY())), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f)
 {
-    width = pParams->GetWidth();
-    height = pParams->GetHeight();
-    textureID = pParams->GetTextureID();
+    width = pParams.GetWidth();
+    height = pParams.GetHeight();
+    textureID = pParams.GetTextureID();
     currentRow = 1;
     currentFrame = 0;
-    scale = pParams->GetScale();
+    scale = pParams.GetScale();
 }
 
 void SDLGameObject::Draw()

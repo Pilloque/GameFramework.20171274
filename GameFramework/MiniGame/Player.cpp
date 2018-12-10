@@ -2,7 +2,7 @@
 #include "InputHandler.h"
 #include "Camera.h"
 
-Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
+Player::Player(const LoaderParams& pParams) : SDLGameObject(pParams)
 {
 }
 

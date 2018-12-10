@@ -5,15 +5,13 @@
 class Enemy : public SDLGameObject
 {
 public:
-    Enemy(const LoaderParams* pParams);
+    Enemy(const LoaderParams& pParams);
     virtual void Draw();
     virtual void Update();
     virtual void Clean();
 
 private:
 	void HandleInput();
-
-    const int numFrames = 5;
 };
 
 #endif

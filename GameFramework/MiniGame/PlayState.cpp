@@ -54,11 +54,11 @@ bool PlayState::OnEnter()
         return false;
     }
 
-    gameObjects.push_back(new Background(new LoaderParams(0, 0, 432, 270, 2, "background")));
-    gameObjects.push_back(new Background(new LoaderParams(864, 0, 432, 270, 2, "background")));
-    gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 55, 0.7f, "helicopter")));
-    gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 55, 0.7f, "helicopter2")));
-    gameObjects.push_back(new Aim(new LoaderParams(0, 0, 11, 11, 2, "aim")));
+    gameObjects.emplace_back(std::make_unique<Background>(LoaderParams(0, 0, 432, 270, 2, "background")));
+    gameObjects.emplace_back(std::make_unique<Background>(LoaderParams(864, 0, 432, 270, 2, "background")));
+    gameObjects.emplace_back(std::make_unique<Player>(LoaderParams(100, 100, 128, 55, 0.7f, "helicopter")));
+    gameObjects.emplace_back(std::make_unique<Enemy>(LoaderParams(300, 300, 128, 55, 0.7f, "helicopter2")));
+    gameObjects.emplace_back(std::make_unique<Aim>(LoaderParams(0, 0, 11, 11, 2, "aim")));
 
     SDL_ShowCursor(SDL_DISABLE);
     Camera::Instance()->SetX(100);
@@ -76,6 +76,7 @@ bool PlayState::OnExit()
     }
     gameObjects.clear();
 
+    TextureManager::Instance()->ClearFromTextureMap("background");
     TextureManager::Instance()->ClearFromTextureMap("helicopter");
     TextureManager::Instance()->ClearFromTextureMap("helicopter2");
     TextureManager::Instance()->ClearFromTextureMap("missile");

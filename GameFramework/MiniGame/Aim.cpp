@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 #include "InputHandler.h"
 
-Aim::Aim(const LoaderParams* pParams) : SDLGameObject(pParams)
+Aim::Aim(const LoaderParams& pParams) : SDLGameObject(pParams)
 {
 }
 

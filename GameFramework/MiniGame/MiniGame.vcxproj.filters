@@ -54,6 +54,12 @@
     <ClCompile Include="Background.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Animal.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -105,6 +111,12 @@
     </ClInclude>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Background.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Animal.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,7 +21,6 @@ void SDLGameObject::Draw()
     else
     {
         TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() - Camera::Instance()->GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale);
-
     }
 }
 

@@ -30,13 +30,3 @@ void Enemy::Clean()
 {
     SDLGameObject::Clean();
 }
-
-void Enemy::HandleInput()
-{
-	velocity = (InputHandler::Instance()->GetMousePosition() - position) / 100;
-
-	if (InputHandler::Instance()->GetMouseButtonState(LEFT))
-	{
-		velocity += Vector2D(3.0f, 0.0f);
-	}
-}

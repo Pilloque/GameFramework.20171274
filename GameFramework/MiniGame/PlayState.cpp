@@ -7,6 +7,8 @@
 #include "SDLGameObject.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Animal.h"
+#include "Missile.h"
 #include "Aim.h"
 #include "Background.h"
 #include <iostream>
@@ -21,14 +23,70 @@ void PlayState::Update()
         Game::Instance()->GetStateMachine()->ChangeState(PauseState::Instance());
         return;
     }
-    for (std::vector<GameObject*>::size_type i = 0; i < gameObjects.size(); i++)
+    if (InputHandler::Instance()->GetMouseButtonState(LEFT) || InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_SPACE))
     {
-        gameObjects[i]->Update();
+        static Uint32 nextFire = 0u;
+        if (SDL_GetTicks() > nextFire)
+        {
+            Vector2D playerPos = static_cast<SDLGameObject*>(player.get())->GetPosition();
+            Vector2D direction = InputHandler::Instance()->GetMousePositionOnCamera() - playerPos;
+            double angle = SDL_atan2(-direction.GetY(), -direction.GetX()) * 180 / M_PI;
+            std::cout << angle <<std::endl;
+            missiles.emplace_back(std::make_unique<Missile>(LoaderParams(int(playerPos.GetX()), int(playerPos.GetY()), 63, 16, "missile"), angle));
+            nextFire = SDL_GetTicks() + 300;
+        }
+    }
+
+    for (auto& objects : backgrounds)
+    {
+        objects->Update();
+    }
+    player->Update();
+    for (auto& objects : enemies)
+    {
+        objects->Update();
+    }
+    for (auto& objects : animals)
+    {
+        objects->Update();
+    }
+    for (auto& objects : missiles)
+    {
+        objects->Update();
+    }
+    for (auto& objects : ui)
+    {
+        objects->Update();
     }
     //if (CheckCollision(dynamic_cast<SDLGameObject*>(gameObjects[0]), dynamic_cast<SDLGameObject*>(gameObjects[1])))
     //{
     //    Game::Instance()->GetStateMachine()->ChangeState(GameOverState::Instance());
     //}
+}
+
+void PlayState::Render()
+{
+    for (auto& objects : backgrounds)
+    {
+        objects->Draw();
+    }
+    player->Draw();
+    for (auto& objects : enemies)
+    {
+        objects->Draw();
+    }
+    for (auto& objects : animals)
+    {
+        objects->Draw();
+    }
+    for (auto& objects : missiles)
+    {
+        objects->Draw();
+    }
+    for (auto& objects : ui)
+    {
+        objects->Draw();
+    }
 }
 
 bool PlayState::OnEnter()
@@ -45,6 +103,10 @@ bool PlayState::OnEnter()
     {
         return false;
     }
+    if (!TextureManager::Instance()->Load("../assets/animate-alpha.png", "animal"))
+    {
+        return false;
+    }
     if (!TextureManager::Instance()->Load("../assets/missile.png", "missile"))
     {
         return false;
@@ -54,11 +116,15 @@ bool PlayState::OnEnter()
         return false;
     }
 
-    gameObjects.emplace_back(std::make_unique<Background>(LoaderParams(0, 0, 432, 270, 2, "background")));
-    gameObjects.emplace_back(std::make_unique<Background>(LoaderParams(864, 0, 432, 270, 2, "background")));
-    gameObjects.emplace_back(std::make_unique<Player>(LoaderParams(100, 100, 128, 55, 0.7f, "helicopter")));
-    gameObjects.emplace_back(std::make_unique<Enemy>(LoaderParams(300, 300, 128, 55, 0.7f, "helicopter2")));
-    gameObjects.emplace_back(std::make_unique<Aim>(LoaderParams(0, 0, 11, 11, 2, "aim")));
+    backgrounds[0] = std::make_unique<Background>(LoaderParams(0, 0, 432, 270, 2, "background"));
+    backgrounds[1] = std::make_unique<Background>(LoaderParams(864, 0, 432, 270, 2, "background"));
+    player = std::make_unique<Player>(LoaderParams(100, 100, 128, 55, 0.7f, "helicopter"));
+    enemies.emplace_back(std::make_unique<Enemy>(LoaderParams(300, 300, 128, 55, 0.7f, "helicopter2")));
+    ui.emplace_back(std::make_unique<Aim>(LoaderParams(0, 0, 11, 11, 2, "aim")));
+    for (int i = 0; i < 8; i++)
+    {
+        animals.emplace_back(std::make_unique<Animal>(LoaderParams(i * 100, 400, 128, 82, "animal")));
+    }
 
     SDL_ShowCursor(SDL_DISABLE);
     Camera::Instance()->SetX(100);
@@ -70,11 +136,13 @@ bool PlayState::OnEnter()
 
 bool PlayState::OnExit()
 {
-    for (std::vector<GameObject*>::size_type i = 0; i < gameObjects.size(); i++)
-    {
-        gameObjects[i]->Clean();
-    }
-    gameObjects.clear();
+    backgrounds[0].reset();
+    backgrounds[1].reset();
+    player.reset();
+    enemies.clear();
+    animals.clear();
+    missiles.clear();
+    ui.clear();
 
     TextureManager::Instance()->ClearFromTextureMap("background");
     TextureManager::Instance()->ClearFromTextureMap("helicopter");

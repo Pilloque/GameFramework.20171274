@@ -1,6 +1,9 @@
 #ifndef PlayState_h
 #define PlayState_h
 #include "GameState.h"
+#include <vector>
+#include <array>
+#include <memory>
 
 class SDLGameObject;
 
@@ -17,6 +20,7 @@ public:
         return pInstance;
     }
     virtual void Update();
+    virtual void Render();
     virtual bool OnEnter();
     virtual bool OnExit();
     virtual std::string GetStateID() const { return playID; }
@@ -25,6 +29,13 @@ private:
     PlayState() {}
     static PlayState* pInstance;
     static const std::string playID;
+
+    std::array<std::unique_ptr<GameObject>, 2> backgrounds;
+    std::unique_ptr<GameObject> player;
+    std::vector<std::unique_ptr<GameObject>> enemies;
+    std::vector<std::unique_ptr<GameObject>> animals;
+    std::vector<std::unique_ptr<GameObject>> missiles;
+    std::vector<std::unique_ptr<GameObject>> ui;
 
     bool CheckCollision(SDLGameObject* p1, SDLGameObject* p2);
 };

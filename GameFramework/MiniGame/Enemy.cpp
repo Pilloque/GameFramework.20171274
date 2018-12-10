@@ -28,6 +28,7 @@ void Enemy::Update()
 
 void Enemy::Clean()
 {
+    SDLGameObject::Clean();
 }
 
 void Enemy::HandleInput()

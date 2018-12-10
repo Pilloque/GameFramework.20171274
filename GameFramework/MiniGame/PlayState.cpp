@@ -6,6 +6,7 @@
 #include "SDLGameObject.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Aim.h"
 #include <iostream>
 
 PlayState* PlayState::pInstance = nullptr;
@@ -49,6 +50,7 @@ bool PlayState::OnEnter()
 
     gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 55, "helicopter")));
     gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 55, "helicopter2")));
+    gameObjects.push_back(new Aim(new LoaderParams(0, 0, 11, 11, 2, "aim")));
 
     SDL_ShowCursor(SDL_DISABLE);
 
@@ -82,15 +84,15 @@ bool PlayState::CheckCollision(SDLGameObject* p1, SDLGameObject* p2)
     float bottomA, bottomB;
 
     leftA = p1->GetPosition().GetX();
-    rightA = p1->GetPosition().GetX() + p1->GetWidth();
+    rightA = p1->GetPosition().GetX() + p1->GetWidth() * p1->GetScale();
     topA = p1->GetPosition().GetY();
-    bottomA = p1->GetPosition().GetY() + p1->GetHeight();
+    bottomA = p1->GetPosition().GetY() + p1->GetHeight() * p1->GetScale();
 
     //Calculate the sides of rect B
     leftB = p2->GetPosition().GetX();
-    rightB = p2->GetPosition().GetX() + p2->GetWidth();
+    rightB = p2->GetPosition().GetX() + p2->GetWidth() * p2->GetScale();
     topB = p2->GetPosition().GetY();
-    bottomB = p2->GetPosition().GetY() + p2->GetHeight();
+    bottomB = p2->GetPosition().GetY() + p2->GetHeight() * p2->GetScale();
 
     //If any of the sides from A are outside of B
     if (bottomA <= topB) { return false; }

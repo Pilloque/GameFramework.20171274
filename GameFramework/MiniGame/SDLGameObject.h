@@ -16,6 +16,7 @@ public:
     Vector2D GetPosition() const { return position; }
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
+    float GetScale() const { return scale; }
 
 protected:
     Vector2D position;
@@ -25,6 +26,7 @@ protected:
     int height;
     int currentFrame;
     int currentRow;
+    float scale;
     std::string textureID;
 };
 

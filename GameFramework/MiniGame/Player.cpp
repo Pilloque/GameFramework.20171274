@@ -1,8 +1,5 @@
 #include "Player.h"
 #include "InputHandler.h"
-#include <iostream>
-
-constexpr float PI = 3.1415926535897932384626433832795f;
 
 Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
 {
@@ -22,6 +19,7 @@ void Player::Update()
 
 void Player::Clean()
 {
+    SDLGameObject::Clean();
 }
 
 void Player::HandleInput()

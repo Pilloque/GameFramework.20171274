@@ -12,22 +12,22 @@ const std::string GameOverState::gameOverID = "GAMEOVER";
 
 bool GameOverState::OnEnter()
 {
-    if (!TextureManager::Instance()->Load("../assets/gameover.png", "gameovertext", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/gameover.png", "gameovertext"))
     {
         return false;
     }
-    if (!TextureManager::Instance()->Load("../assets/main.png", "mainbutton", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/main.png", "mainbutton"))
     {
         return false;
     }
-    if (!TextureManager::Instance()->Load("../assets/restart.png", "restartbutton", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/restart.png", "restartbutton"))
     {
         return false;
     }
 
-    GameObject* gameOverText = new AnimatedGraphic(new LoaderParams(720 / 2 - 95, 100, 190, 30, "gameovertext"), 2);
-    GameObject* button1 = new MenuButton(new LoaderParams(720 / 2 - 100, 200, 200, 80, "mainbutton"), GameOverToMain);
-    GameObject* button2 = new MenuButton(new LoaderParams(720 / 2 - 100, 300, 200, 80, "restartbutton"), RestartPlay);
+    GameObject* gameOverText = new AnimatedGraphic(new LoaderParams(864 / 2 - 95, 100, 190, 30, "gameovertext"), 2);
+    GameObject* button1 = new MenuButton(new LoaderParams(864 / 2 - 100, 200, 200, 80, "mainbutton"), GameOverToMain);
+    GameObject* button2 = new MenuButton(new LoaderParams(864 / 2 - 100, 300, 200, 80, "restartbutton"), RestartPlay);
 
     gameObjects.push_back(gameOverText);
     gameObjects.push_back(button1);

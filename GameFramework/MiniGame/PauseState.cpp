@@ -11,16 +11,16 @@ const std::string PauseState::pauseID = "PAUSE";
 
 bool PauseState::OnEnter()
 {
-    if (!TextureManager::Instance()->Load("../assets/resume.png", "resumebutton", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/resume.png", "resumebutton"))
     {
         return false;
     }
-    if (!TextureManager::Instance()->Load("../assets/main.png", "mainbutton", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/main.png", "mainbutton"))
     {
         return false;
     }
-    GameObject* button1 = new MenuButton(new LoaderParams(720 / 2 - 100, 150, 200, 80, "mainbutton"), PauseToMain);
-    GameObject* button2 = new MenuButton(new LoaderParams(720 / 2 - 100, 300, 200, 80, "resumebutton"), ResumePlay);
+    GameObject* button1 = new MenuButton(new LoaderParams(864 / 2 - 100, 150, 200, 80, "mainbutton"), PauseToMain);
+    GameObject* button2 = new MenuButton(new LoaderParams(864 / 2 - 100, 300, 200, 80, "resumebutton"), ResumePlay);
     gameObjects.push_back(button1);
     gameObjects.push_back(button2);
     std::cout << "entering PauseState\n";

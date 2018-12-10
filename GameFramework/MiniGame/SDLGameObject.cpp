@@ -1,6 +1,6 @@
 #include "SDLGameObject.h"
 #include "TextureManager.h"
-#include "Game.h"
+#include "Camera.h"
 
 SDLGameObject::SDLGameObject(const LoaderParams* pParams) : GameObject(pParams), position(float(pParams->GetX()), float(pParams->GetY())), velocity(0.0f, 0.0f), acceleration(0.0f, 0.0f)
 {
@@ -16,11 +16,11 @@ void SDLGameObject::Draw()
 {
     if (velocity.GetX() > 0)
     {
-        TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale, Game::Instance()->GetRenderer(), SDL_FLIP_HORIZONTAL);
+        TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() - Camera::Instance()->GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale, SDL_FLIP_HORIZONTAL);
     }
     else
     {
-        TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale, Game::Instance()->GetRenderer());
+        TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() - Camera::Instance()->GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale);
 
     }
 }

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "InputHandler.h"
+#include "Camera.h"
 
 Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
 {
@@ -13,6 +14,7 @@ void Player::Draw()
 void Player::Update()
 {
     HandleInput();
+    Camera::Instance()->SetX(position.GetX() - 432);
     currentFrame = int(((SDL_GetTicks() / 100) % 5));
     SDLGameObject::Update();
 }
@@ -43,6 +45,7 @@ void Player::HandleInput()
     {
         direction.SetY(1.0f);
     }
+
     velocity += direction.Normalized() * speed;
     velocity *= 0.92f;
 }

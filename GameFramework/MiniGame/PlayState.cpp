@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "InputHandler.h"
+#include "Camera.h"
 #include "SDLGameObject.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -31,28 +32,29 @@ void PlayState::Update()
 
 bool PlayState::OnEnter()
 {
-    if (!TextureManager::Instance()->Load("../assets/helicopter.png", "helicopter", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/helicopter.png", "helicopter"))
     {
         return false;
     }
-    if (!TextureManager::Instance()->Load("../assets/helicopter2.png", "helicopter2", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/helicopter2.png", "helicopter2"))
     {
         return false;
     }
-    if (!TextureManager::Instance()->Load("../assets/missile.png", "missile", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/missile.png", "missile"))
     {
         return false;
     }
-    if (!TextureManager::Instance()->Load("../assets/aim.png", "aim", Game::Instance()->GetRenderer()))
+    if (!TextureManager::Instance()->Load("../assets/aim.png", "aim"))
     {
         return false;
     }
 
-    gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 55, "helicopter")));
-    gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 55, "helicopter2")));
+    gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 55, 0.7f, "helicopter")));
+    gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 55, 0.7f, "helicopter2")));
     gameObjects.push_back(new Aim(new LoaderParams(0, 0, 11, 11, 2, "aim")));
 
     SDL_ShowCursor(SDL_DISABLE);
+    Camera::Instance()->SetX(100);
 
     std::cout << "entering PlayState\n";
 
@@ -68,6 +70,9 @@ bool PlayState::OnExit()
     gameObjects.clear();
 
     TextureManager::Instance()->ClearFromTextureMap("helicopter");
+    TextureManager::Instance()->ClearFromTextureMap("helicopter2");
+    TextureManager::Instance()->ClearFromTextureMap("missile");
+    TextureManager::Instance()->ClearFromTextureMap("aim");
 
     SDL_ShowCursor(SDL_ENABLE);
 

@@ -1,4 +1,5 @@
 #include "GameStateMachine.h"
+#include "Camera.h"
 
 void GameStateMachine::ChangeState(GameState *pState)
 {
@@ -8,6 +9,8 @@ void GameStateMachine::ChangeState(GameState *pState)
         {
             prevState = currentState;
             currentState->OnExit();
+
+            Camera::Instance()->SetX(0);
         }
         currentState = pState;
         currentState->OnEnter();

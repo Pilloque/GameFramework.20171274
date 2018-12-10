@@ -14,9 +14,12 @@ void Player::Draw()
 void Player::Update()
 {
     HandleInput();
-    Camera::Instance()->SetX(position.GetX() - 432);
+    //Camera::Instance()->SetX(position.GetX() - 432);
+    Camera::Instance()->Follow(position.GetX() - 432 + 45, 0.1f);
     currentFrame = int(((SDL_GetTicks() / 100) % 5));
-    SDLGameObject::Update();
+
+    velocity += acceleration;
+    position += velocity;
 }
 
 void Player::Clean()

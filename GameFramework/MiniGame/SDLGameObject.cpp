@@ -29,6 +29,15 @@ void SDLGameObject::Update()
 {
     velocity += acceleration;
     position += velocity;
+
+    if (position.GetX() < Camera::Instance()->GetX() - 100)
+    {
+        position += Vector2D(1064, 0);
+    }
+    else if (position.GetX() > Camera::Instance()->GetX() + 964)
+    {
+        position -= Vector2D(1064, 0);
+    }
 }
 
 void SDLGameObject::Clean()

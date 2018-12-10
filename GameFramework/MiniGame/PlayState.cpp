@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Aim.h"
+#include "Background.h"
 #include <iostream>
 
 PlayState* PlayState::pInstance = nullptr;
@@ -24,14 +25,18 @@ void PlayState::Update()
     {
         gameObjects[i]->Update();
     }
-    if (CheckCollision(dynamic_cast<SDLGameObject*>(gameObjects[0]), dynamic_cast<SDLGameObject*>(gameObjects[1])))
-    {
-        Game::Instance()->GetStateMachine()->ChangeState(GameOverState::Instance());
-    }
+    //if (CheckCollision(dynamic_cast<SDLGameObject*>(gameObjects[0]), dynamic_cast<SDLGameObject*>(gameObjects[1])))
+    //{
+    //    Game::Instance()->GetStateMachine()->ChangeState(GameOverState::Instance());
+    //}
 }
 
 bool PlayState::OnEnter()
 {
+    if (!TextureManager::Instance()->Load("../assets/minigame_background.png", "background"))
+    {
+        return false;
+    }
     if (!TextureManager::Instance()->Load("../assets/helicopter.png", "helicopter"))
     {
         return false;
@@ -49,6 +54,8 @@ bool PlayState::OnEnter()
         return false;
     }
 
+    gameObjects.push_back(new Background(new LoaderParams(0, 0, 432, 270, 2, "background")));
+    gameObjects.push_back(new Background(new LoaderParams(864, 0, 432, 270, 2, "background")));
     gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 55, 0.7f, "helicopter")));
     gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 55, 0.7f, "helicopter2")));
     gameObjects.push_back(new Aim(new LoaderParams(0, 0, 11, 11, 2, "aim")));

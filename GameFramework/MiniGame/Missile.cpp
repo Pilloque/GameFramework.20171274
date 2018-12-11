@@ -5,6 +5,7 @@
 Missile::Missile(const LoaderParams& pParams, double angle) : SDLGameObject(pParams), angle(angle)
 {
     acceleration = Vector2D(-SDL_cosf(float(angle * M_PI / 180)), -SDL_sinf(float(angle * M_PI / 180))) * 0.1f;
+    velocity = Vector2D(-SDL_cosf(float(angle * M_PI / 180)), -SDL_sinf(float(angle * M_PI / 180))) * 0.5f;
 }
 
 void Missile::Draw()

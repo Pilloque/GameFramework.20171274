@@ -13,6 +13,7 @@
 #include "Missile.h"
 #include "Aim.h"
 #include "Background.h"
+#include "Explosion.h"
 //Standard
 #include <iostream>
 #include <algorithm>
@@ -46,6 +47,10 @@ void PlayState::Update()
     {
         objects->Update();
     }
+    for (auto& objects : effects)
+    {
+        objects->Update();
+    }
     for (auto& objects : ui)
     {
         objects->Update();
@@ -74,6 +79,10 @@ void PlayState::Render()
     {
         objects->Draw();
     }
+    for (auto& objects : effects)
+    {
+        objects->Draw();
+    }
     for (auto& objects : ui)
     {
         objects->Draw();
@@ -99,6 +108,10 @@ bool PlayState::OnEnter()
         return false;
     }
     if (!TextureManager::Instance()->Load("../assets/missile.png", "missile"))
+    {
+        return false;
+    }
+    if (!TextureManager::Instance()->Load("../assets/explosion.png", "explosion"))
     {
         return false;
     }
@@ -141,6 +154,7 @@ bool PlayState::OnExit()
     TextureManager::Instance()->ClearFromTextureMap("helicopter2");
     TextureManager::Instance()->ClearFromTextureMap("animal");
     TextureManager::Instance()->ClearFromTextureMap("missile");
+    TextureManager::Instance()->ClearFromTextureMap("explosion");
     TextureManager::Instance()->ClearFromTextureMap("aim");
 
     SDL_ShowCursor(SDL_ENABLE);
@@ -159,8 +173,10 @@ void PlayState::CheckCollision()
         {
             if (Collision::AABB(m.get(), e.get()))
             {
+                Vector2D enemyPos = dynamic_cast<SDLGameObject*>(e.get())->GetPosition();
                 m->Destroy();
                 e->Destroy();
+                effects.emplace_back(std::make_unique<Explosion>(LoaderParams(int(enemyPos.GetX()), int(enemyPos.GetY()), 64, 64, 1.5f, "explosion")));
                 break;
             }
         }
@@ -171,6 +187,23 @@ void PlayState::CheckCollision()
                 m->Destroy();
                 a->Destroy();
                 break;
+            }
+        }
+    }
+
+    for (auto& e : enemies)
+    {
+        if (Collision::AABB(e.get(), player.get()))
+        {
+            e->Destroy();
+            player->Destroy();
+            Game::Instance()->GetStateMachine()->ChangeState(GameOverState::Instance());
+            return;
+        }
+        for (auto& a : animals)
+        {
+            if (Collision::AABB(e.get(), a.get()))
+            {
             }
         }
     }
@@ -193,36 +226,9 @@ void PlayState::Refresh()
         std::remove_if(std::begin(missiles), std::end(missiles), [](const std::unique_ptr<GameObject> &object) {return !object->IsActive(); }),
         std::end(missiles)
     );
+    effects.erase
+    (
+        std::remove_if(std::begin(effects), std::end(effects), [](const std::unique_ptr<GameObject> &object) {return !object->IsActive(); }),
+        std::end(effects)
+    );
 }
-
-//inline bool PlayState::AABB(SDLGameObject* p1, SDLGameObject* p2)
-//{
-//    float leftA, leftB;
-//    float rightA, rightB;
-//    float topA, topB;
-//    float bottomA, bottomB;
-//
-//    leftA = p1->GetPosition().GetX();
-//    rightA = p1->GetPosition().GetX() + p1->GetWidth() * p1->GetScale();
-//    topA = p1->GetPosition().GetY();
-//    bottomA = p1->GetPosition().GetY() + p1->GetHeight() * p1->GetScale();
-//
-//    //Calculate the sides of rect B
-//    leftB = p2->GetPosition().GetX();
-//    rightB = p2->GetPosition().GetX() + p2->GetWidth() * p2->GetScale();
-//    topB = p2->GetPosition().GetY();
-//    bottomB = p2->GetPosition().GetY() + p2->GetHeight() * p2->GetScale();
-//
-//    //If any of the sides from A are outside of B
-//    if (bottomA <= topB) { return false; }
-//    if (topA >= bottomB) { return false; }
-//    if (rightA <= leftB) { return false; }
-//    if (leftA >= rightB) { return false; }
-//
-//    return true;
-//}
-//
-//inline bool PlayState::AABB(GameObject* p1, GameObject* p2)
-//{
-//    return AABB(dynamic_cast<SDLGameObject*>(p1), dynamic_cast<SDLGameObject*>(p2));
-//}

@@ -61,6 +61,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="ProjectileManager.cpp" />
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -122,5 +125,8 @@
     </ClInclude>
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Explosion.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

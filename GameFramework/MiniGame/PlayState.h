@@ -38,6 +38,7 @@ private:
     std::vector<std::unique_ptr<GameObject>> enemies;
     std::vector<std::unique_ptr<GameObject>> animals;
     std::vector<std::unique_ptr<GameObject>> missiles;
+    std::vector<std::unique_ptr<GameObject>> effects;
     std::vector<std::unique_ptr<GameObject>> ui;
 };
 

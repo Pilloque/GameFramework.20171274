@@ -1,6 +1,6 @@
 #ifndef GameObject_h
 #define GameObject_h
-#include <iostream>
+//#include <iostream>
 
 class LoaderParams;
 
@@ -13,10 +13,10 @@ public:
 
     void Destroy() { active = false; }
     bool IsActive() const { return active; }
-    ~GameObject()
-    {
-        std::cout << "Áö¿öÁü\n";
-    }
+    //~GameObject()
+    //{
+    //    std::cout << "Áö¿öÁü\n";
+    //}
 
 protected:
     GameObject(const LoaderParams& pParams) {}

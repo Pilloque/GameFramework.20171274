@@ -64,6 +64,9 @@
     <ClCompile Include="Explosion.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Carrcass.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -126,6 +129,9 @@
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Explosion.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Carrcass.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

@@ -25,7 +25,7 @@ bool GameOverState::OnEnter()
         return false;
     }
 
-    gameObjects.emplace_back(std::make_unique<AnimatedGraphic>(LoaderParams(864 / 2 - 95, 100, 190, 30, "gameovertext"), 2));
+    gameObjects.emplace_back(std::make_unique<AnimatedGraphic>(LoaderParams(864 / 2 - 95, 100, 190, 30, "gameovertext"), 2, 2));
     gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(864 / 2 - 100, 200, 200, 80, "mainbutton"), GameOverToMain));
     gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(864 / 2 - 100, 300, 200, 80, "restartbutton"), RestartPlay));
 

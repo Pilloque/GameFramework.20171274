@@ -16,12 +16,13 @@ void SDLGameObject::Draw()
 {
     if (velocity.GetX() > 0)
     {
-        TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() - Camera::Instance()->GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale, SDL_FLIP_HORIZONTAL);
+        flip = SDL_FLIP_HORIZONTAL;
     }
-    else
+    else if (velocity.GetX() < 0)
     {
-        TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() - Camera::Instance()->GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale);
+        flip = SDL_FLIP_NONE;
     }
+    TextureManager::Instance()->DrawFrame(textureID, int(position.GetX() - Camera::Instance()->GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, currentRow, currentFrame, scale, flip);
 }
 
 void SDLGameObject::Update()

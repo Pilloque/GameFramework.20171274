@@ -1,9 +1,13 @@
 #include "Enemy.h"
 #include "InputHandler.h"
+#include "Animal.h"
+#include <iostream>
 
 Enemy::Enemy(const LoaderParams& pParams) : SDLGameObject(pParams)
 {
-    velocity.SetX(0.001f);
+    state = APPROACH;
+    animal = nullptr;
+    velocity.SetX(0.5f * (rand() % 3) - 0.5f);
     velocity.SetY(2);
 }
 
@@ -14,19 +18,46 @@ void Enemy::Draw()
 
 void Enemy::Update()
 {
-    currentFrame = int(((SDL_GetTicks() / 100) % 5));
-    if (position.GetY() < 0)
+    switch (state)
     {
-        velocity.SetY(2);
+    case APPROACH:
+        if (position.GetY() > 390)
+        {
+            velocity.Zero();
+            state = HUNT;
+        }
+        break;
+    case RUN:
+        if (position.GetY() < -100)
+        {
+            Destroy();
+            return;
+        }
+        break;
+    default:
+        break;
     }
-    else if (position.GetY() > 400)
-    {
-        velocity.SetY(-2);
-    }
+
     SDLGameObject::Update();
 }
 
 void Enemy::Clean()
 {
     SDLGameObject::Clean();
+}
+
+void Enemy::Destroy()
+{
+    if (animal != nullptr)
+    {
+        animal->Destroy();
+    }
+    SDLGameObject::Destroy();
+}
+
+void Enemy::SetStateRun()
+{
+    state = RUN;
+    velocity.SetX(0.5f * (rand() % 3) - 0.5f);
+    velocity.SetY(-2);
 }

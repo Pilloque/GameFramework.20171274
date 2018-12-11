@@ -14,6 +14,7 @@
 #include "Aim.h"
 #include "Background.h"
 #include "Explosion.h"
+#include "Carrcass.h"
 //Standard
 #include <iostream>
 #include <algorithm>
@@ -27,6 +28,15 @@ void PlayState::Update()
     {
         Game::Instance()->GetStateMachine()->ChangeState(PauseState::Instance());
         return;
+    }
+    if (SDL_GetTicks() > nextSpawn)
+    {
+        enemies.emplace_back(std::make_unique<Enemy>(LoaderParams((rand() % 10) * 100, -100, 128, 55, 0.7f, "helicopter2")));
+        nextSpawn = SDL_GetTicks() + spawnDelay;
+        if (spawnDelay > 700)
+        {
+            spawnDelay = spawnDelay - 50u;
+        }
     }
     projectiles->HandleInput();
 
@@ -66,6 +76,10 @@ void PlayState::Render()
     {
         objects->Draw();
     }
+    for (auto& objects : effects)
+    {
+        objects->Draw();
+    }
     player->Draw();
     for (auto& objects : enemies)
     {
@@ -76,10 +90,6 @@ void PlayState::Render()
         objects->Draw();
     }
     for (auto& objects : missiles)
-    {
-        objects->Draw();
-    }
-    for (auto& objects : effects)
     {
         objects->Draw();
     }
@@ -115,6 +125,10 @@ bool PlayState::OnEnter()
     {
         return false;
     }
+    if (!TextureManager::Instance()->Load("../assets/carrcass.png", "carrcass"))
+    {
+        return false;
+    }
     if (!TextureManager::Instance()->Load("../assets/aim.png", "aim"))
     {
         return false;
@@ -123,7 +137,6 @@ bool PlayState::OnEnter()
     backgrounds[0] = std::make_unique<Background>(LoaderParams(0, 0, 432, 270, 2, "background"));
     backgrounds[1] = std::make_unique<Background>(LoaderParams(864, 0, 432, 270, 2, "background"));
     player = std::make_unique<Player>(LoaderParams(100, 100, 128, 55, 0.7f, "helicopter"));
-    enemies.emplace_back(std::make_unique<Enemy>(LoaderParams(300, 300, 128, 55, 0.7f, "helicopter2")));
     ui.emplace_back(std::make_unique<Aim>(LoaderParams(0, 0, 11, 11, 2, "aim")));
     for (int i = 0; i < 8; i++)
     {
@@ -133,6 +146,9 @@ bool PlayState::OnEnter()
     SDL_ShowCursor(SDL_DISABLE);
     Camera::Instance()->SetX(100);
     projectiles = new ProjectileManager(*static_cast<Player*>(player.get()), missiles);
+
+    spawnDelay = 1500u;
+    nextSpawn = SDL_GetTicks() + spawnDelay;
 
     std::cout << "entering PlayState\n";
 
@@ -155,6 +171,7 @@ bool PlayState::OnExit()
     TextureManager::Instance()->ClearFromTextureMap("animal");
     TextureManager::Instance()->ClearFromTextureMap("missile");
     TextureManager::Instance()->ClearFromTextureMap("explosion");
+    TextureManager::Instance()->ClearFromTextureMap("carrcass");
     TextureManager::Instance()->ClearFromTextureMap("aim");
 
     SDL_ShowCursor(SDL_ENABLE);
@@ -176,7 +193,7 @@ void PlayState::CheckCollision()
                 Vector2D enemyPos = dynamic_cast<SDLGameObject*>(e.get())->GetPosition();
                 m->Destroy();
                 e->Destroy();
-                effects.emplace_back(std::make_unique<Explosion>(LoaderParams(int(enemyPos.GetX()), int(enemyPos.GetY()), 64, 64, 1.5f, "explosion")));
+                effects.emplace_back(std::make_unique<Explosion>(LoaderParams(int(enemyPos.GetX()), int(enemyPos.GetY()) - 16, 64, 64, 1.5f, "explosion")));
                 break;
             }
         }
@@ -184,8 +201,10 @@ void PlayState::CheckCollision()
         {
             if (Collision::AABB(m.get(), a.get()))
             {
+                Vector2D animalPos = dynamic_cast<SDLGameObject*>(a.get())->GetPosition();
                 m->Destroy();
                 a->Destroy();
+                effects.emplace_back(std::make_unique<Carrcass>(LoaderParams(int(animalPos.GetX()), int(animalPos.GetY()), 128, 82, 0.8f, "carrcass")));
                 break;
             }
         }
@@ -204,6 +223,14 @@ void PlayState::CheckCollision()
         {
             if (Collision::AABB(e.get(), a.get()))
             {
+                auto ani = dynamic_cast<Animal*>(a.get());
+                auto ene = dynamic_cast<Enemy*>(e.get());
+                if (ani->GetState() == FREE && ene->GetState() == HUNT)
+                {
+                    ani->HuntedBy(ene);
+                    ene->SetStateRun();
+                    break;
+                }
             }
         }
     }

@@ -33,6 +33,9 @@ private:
     static const std::string playID;
     ProjectileManager* projectiles;
 
+    unsigned int nextSpawn;
+    unsigned int spawnDelay;
+
     std::array<std::unique_ptr<GameObject>, 2> backgrounds;
     std::unique_ptr<GameObject> player;
     std::vector<std::unique_ptr<GameObject>> enemies;

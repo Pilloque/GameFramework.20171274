@@ -26,7 +26,6 @@ void Explosion::Update()
             }
         }
     }
-    SDLGameObject::Update();
 }
 
 void Explosion::Clean()

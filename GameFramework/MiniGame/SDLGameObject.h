@@ -29,6 +29,9 @@ protected:
     int currentRow;
     float scale;
     std::string textureID;
+
+private:
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
 };
 
 #endif

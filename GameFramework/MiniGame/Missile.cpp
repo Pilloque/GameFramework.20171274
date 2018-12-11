@@ -16,6 +16,17 @@ void Missile::Update()
 {
     velocity += acceleration;
     position += velocity;
+
+    if (position.GetX() - Camera::Instance()->GetX() > 964 || position.GetX() - Camera::Instance()->GetX() < -100)
+    {
+        Destroy();
+        return;
+    }
+    if (position.GetY() > 640 || position.GetY() < -100)
+    {
+        Destroy();
+        return;
+    }
 }
 
 void Missile::Clean()

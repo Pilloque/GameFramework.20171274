@@ -5,7 +5,7 @@
 #include <array>
 #include <memory>
 
-class SDLGameObject;
+class ProjectileManager;
 
 class PlayState : public GameState
 {
@@ -23,12 +23,15 @@ public:
     virtual void Render();
     virtual bool OnEnter();
     virtual bool OnExit();
+    void CheckCollision();
+    void Refresh();
     virtual std::string GetStateID() const { return playID; }
 
 private:
     PlayState() {}
     static PlayState* pInstance;
     static const std::string playID;
+    ProjectileManager* projectiles;
 
     std::array<std::unique_ptr<GameObject>, 2> backgrounds;
     std::unique_ptr<GameObject> player;
@@ -36,8 +39,6 @@ private:
     std::vector<std::unique_ptr<GameObject>> animals;
     std::vector<std::unique_ptr<GameObject>> missiles;
     std::vector<std::unique_ptr<GameObject>> ui;
-
-    bool CheckCollision(SDLGameObject* p1, SDLGameObject* p2);
 };
 
 #endif

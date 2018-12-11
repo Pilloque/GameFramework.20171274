@@ -60,6 +60,7 @@
     <ClCompile Include="Missile.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectileManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -119,5 +120,7 @@
     <ClInclude Include="Missile.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileManager.h" />
+    <ClInclude Include="Collision.h" />
   </ItemGroup>
 </Project>

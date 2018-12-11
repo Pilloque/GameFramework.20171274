@@ -13,6 +13,7 @@ public:
     virtual void Draw();
     virtual void Update();
     virtual void Clean();
+
     Vector2D GetPosition() const { return position; }
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }

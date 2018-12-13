@@ -29,13 +29,18 @@ void PlayState::Update()
         Game::Instance()->GetStateMachine()->ChangeState(PauseState::Instance());
         return;
     }
+	if (animals.size() == 0)
+	{
+		Game::Instance()->GetStateMachine()->ChangeState(GameOverState::Instance());
+		return;
+	}
     if (SDL_GetTicks() > nextSpawn)
     {
         enemies.emplace_back(std::make_unique<Enemy>(LoaderParams((rand() % 10) * 100, -100, 128, 55, 0.7f, "helicopter2")));
         nextSpawn = SDL_GetTicks() + spawnDelay;
-        if (spawnDelay > 700)
+        if (spawnDelay > 800)
         {
-            spawnDelay = spawnDelay - 50u;
+            spawnDelay = spawnDelay - 40u;
         }
     }
     projectiles->HandleInput();
@@ -147,7 +152,7 @@ bool PlayState::OnEnter()
     Camera::Instance()->SetX(100);
     projectiles = new ProjectileManager(*static_cast<Player*>(player.get()), missiles);
 
-    spawnDelay = 1500u;
+    spawnDelay = 1600u;
     nextSpawn = SDL_GetTicks() + spawnDelay;
 
     std::cout << "entering PlayState\n";

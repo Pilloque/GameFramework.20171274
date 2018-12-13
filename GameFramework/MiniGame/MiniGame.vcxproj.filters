@@ -67,6 +67,7 @@
     <ClCompile Include="Carrcass.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="TextPrinter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -134,5 +135,6 @@
     <ClInclude Include="Carrcass.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="TextPrinter.h" />
   </ItemGroup>
 </Project>

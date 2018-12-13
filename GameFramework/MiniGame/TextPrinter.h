@@ -2,32 +2,33 @@
 #define TextPrinter_h
 #include <SDL.h>
 #include <string>
-#include <map>
 
 class TextPrinter
 {
 public:
-	~TextPrinter() {}
-	static TextPrinter* Instance()
-	{
-		if (pInstance == nullptr)
-		{
-			pInstance = new TextPrinter();
-		}
-		return pInstance;
-	}
+    ~TextPrinter()
+    {
+        if (numTexture != nullptr) SDL_DestroyTexture(numTexture);
+    }
+    static TextPrinter* Instance()
+    {
+        if (pInstance == nullptr)
+        {
+            pInstance = new TextPrinter();
+            pInstance->Init();
+        }
+        return pInstance;
+    }
 
-	bool Load(std::string fileName, std::string id);
-	void Init();
-	void Draw(std::string id, int x, int y, int width, int height, float scale);
-	void Draw(std::string id, int x, int y, int width, int height, float scale, double angle);
-	void ClearFromCharMap(std::string id);
+    void Draw(char ch, int x, int y, int scale = 1);
+    void Draw(std::string str, int x, int y, int scale = 1);
 
 private:
-	TextPrinter() {}
-	static TextPrinter* pInstance;
+    TextPrinter() {}
+    static TextPrinter* pInstance;
+    bool Init();
 
-	std::map<std::string, SDL_Texture*> charMap;
+    SDL_Texture* numTexture = nullptr;
 };
 
 #endif

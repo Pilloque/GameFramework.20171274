@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "ProjectileManager.h"
 #include "InputHandler.h"
+#include "TextPrinter.h"
 #include "Camera.h"
 #include "Collision.h"
 //Objects
@@ -102,6 +103,9 @@ void PlayState::Render()
     {
         objects->Draw();
     }
+    //남은 동물 수 표시
+    TextureManager::Instance()->Draw("animal", 12, 12, 128, 82, 0.8f);
+    TextPrinter::Instance()->Draw("x" + std::to_string(animals.size()), 88, 28, 5);
 }
 
 bool PlayState::OnEnter()

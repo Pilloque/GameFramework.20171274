@@ -9,13 +9,14 @@ public:
     void ChangeState(GameState* pState);
     void PushState(GameState* pState);
     void PopState();
+	GameState* GetCurrentState() { return currentState; }
 
     virtual void Update();
     virtual void Render();
 
 private:
-    GameState* currentState;
-    GameState* prevState;
+    GameState* currentState = nullptr;
+    GameState* prevState = nullptr;
     std::vector<GameState*> gameStates;
 };
 

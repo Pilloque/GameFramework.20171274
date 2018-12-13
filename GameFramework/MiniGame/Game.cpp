@@ -71,10 +71,19 @@ void Game::Clean()
 
 void Game::HandleEvents()
 {
+	static bool returnUp = true;
 	InputHandler::Instance()->Update();
     if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_RETURN))
     {
-        pGameStateMachine->ChangeState(PlayState::Instance());
+		if (returnUp)
+		{
+			pGameStateMachine->ChangeState(PlayState::Instance());
+			returnUp = false;
+		}
     }
+	else
+	{
+		returnUp = true;
+	}
 
 }

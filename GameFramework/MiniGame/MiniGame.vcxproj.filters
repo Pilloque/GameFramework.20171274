@@ -68,6 +68,10 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="TextPrinter.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UIBox.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -136,5 +140,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="TextPrinter.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="UIBox.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

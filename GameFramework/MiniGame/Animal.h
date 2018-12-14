@@ -5,7 +5,8 @@
 enum animal_state
 {
     FREE = 0,
-    HUNTED = 1
+    HUNTED = 1,
+    DROP = 2
 };
 
 class Enemy;
@@ -19,11 +20,14 @@ public:
     virtual void Clean();
     virtual void Destroy();
     void HuntedBy(Enemy* enemy_);
+    void Drop();
     animal_state GetState() const { return state; }
 
 private:
     Enemy* enemy;
     animal_state state;
+
+    void SetVelocityRandom();
 };
 
 #endif

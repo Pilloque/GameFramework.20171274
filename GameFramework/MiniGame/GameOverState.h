@@ -14,6 +14,7 @@ public:
         }
         return pInstance;
     }
+    virtual void Render();
     virtual bool OnEnter();
     virtual bool OnExit();
     virtual std::string GetStateID() const { return gameOverID; }

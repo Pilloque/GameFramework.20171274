@@ -28,7 +28,7 @@ void Enemy::Update()
         }
         break;
     case RUN:
-        if (position.GetY() < -100)
+        if (animal == nullptr && position.GetY() < -100)
         {
             Destroy();
             return;
@@ -50,7 +50,7 @@ void Enemy::Destroy()
 {
     if (animal != nullptr)
     {
-        animal->Destroy();
+        animal->Drop();
     }
     SDLGameObject::Destroy();
 }

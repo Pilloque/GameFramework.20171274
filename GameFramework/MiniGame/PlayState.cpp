@@ -6,6 +6,7 @@
 #include "InputHandler.h"
 #include "TextPrinter.h"
 #include "Camera.h"
+#include "Timer.h"
 #include "Collision.h"
 //Objects
 #include "Player.h"
@@ -16,6 +17,7 @@
 #include "Background.h"
 #include "Explosion.h"
 #include "Carrcass.h"
+#include "UIBox.h"
 //Standard
 #include <iostream>
 #include <algorithm>
@@ -105,7 +107,9 @@ void PlayState::Render()
     }
     //남은 동물 수 표시
     TextureManager::Instance()->Draw("animal", 12, 12, 128, 82, 0.8f);
-    TextPrinter::Instance()->Draw("x" + std::to_string(animals.size()), 88, 28, 5);
+    TextPrinter::Instance()->Draw("x" + std::to_string(animals.size()), 88, 32, 4);
+    //타이머 표시
+    TextPrinter::Instance()->Draw(Timer::Instance()->GetTime(), 180, 28, 5);
 }
 
 bool PlayState::OnEnter()
@@ -142,11 +146,16 @@ bool PlayState::OnEnter()
     {
         return false;
     }
+    if (!TextureManager::Instance()->Load("../assets/scoreboard.png", "scoreboard"))
+    {
+        return false;
+    }
 
     backgrounds[0] = std::make_unique<Background>(LoaderParams(0, 0, 432, 270, 2, "background"));
     backgrounds[1] = std::make_unique<Background>(LoaderParams(864, 0, 432, 270, 2, "background"));
     player = std::make_unique<Player>(LoaderParams(100, 100, 128, 55, 0.7f, "helicopter"));
-    ui.emplace_back(std::make_unique<Aim>(LoaderParams(0, 0, 11, 11, 2, "aim")));
+    ui.emplace_back(std::make_unique<Aim>(LoaderParams(0, 0, 11, 11, 3, "aim")));
+    ui.emplace_back(std::make_unique<UIBox>(LoaderParams(0, 0, 360, 100, 1, "scoreboard")));
     for (int i = 0; i < 8; i++)
     {
         animals.emplace_back(std::make_unique<Animal>(LoaderParams(i * 100, 400, 128, 82, "animal")));
@@ -154,6 +163,7 @@ bool PlayState::OnEnter()
 
     SDL_ShowCursor(SDL_DISABLE);
     Camera::Instance()->SetX(100);
+    Timer::Instance()->StartTimer();
     projectiles = new ProjectileManager(*static_cast<Player*>(player.get()), missiles);
 
     spawnDelay = 1600u;
@@ -238,6 +248,7 @@ void PlayState::CheckCollision()
                 {
                     ani->HuntedBy(ene);
                     ene->SetStateRun();
+                    ene->SetAnimal(ani);
                     break;
                 }
             }

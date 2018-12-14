@@ -14,9 +14,9 @@ void MenuButton::Draw()
 void MenuButton::Update()
 {
     Vector2D* pMousePos = &(InputHandler::Instance()->GetMousePosition());
-    if (pMousePos->GetX() < (position.GetX() + width)
+    if (pMousePos->GetX() < (position.GetX() + width * scale)
         && pMousePos->GetX() > position.GetX()
-        && pMousePos->GetY() < (position.GetY() + height)
+        && pMousePos->GetY() < (position.GetY() + height * scale)
         && pMousePos->GetY() > position.GetY())
     {
         if (InputHandler::Instance()->GetMouseButtonState(LEFT) && released) {

@@ -3,12 +3,24 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "InputHandler.h"
+#include "TextPrinter.h"
+#include "Timer.h"
 #include "AnimatedGraphic.h"
 #include "MenuButton.h"
 #include <iostream>
 
 GameOverState* GameOverState::pInstance = nullptr;
 const std::string GameOverState::gameOverID = "GAMEOVER";
+
+void GameOverState::Render()
+{
+    for (std::vector<std::unique_ptr<GameObject>>::size_type i = 0; i < gameObjects.size(); i++)
+    {
+        gameObjects[i]->Draw();
+    }
+
+    TextPrinter::Instance()->Draw(Timer::Instance()->GetOldTime(), 200, 240, 10);
+}
 
 bool GameOverState::OnEnter()
 {
@@ -25,9 +37,9 @@ bool GameOverState::OnEnter()
         return false;
     }
 
-    gameObjects.emplace_back(std::make_unique<AnimatedGraphic>(LoaderParams(864 / 2 - 95, 100, 190, 30, "gameovertext"), 2, 2));
-    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(864 / 2 - 100, 200, 200, 80, "mainbutton"), GameOverToMain));
-    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(864 / 2 - 100, 300, 200, 80, "restartbutton"), RestartPlay));
+    gameObjects.emplace_back(std::make_unique<AnimatedGraphic>(LoaderParams(864 / 2 - 190, 100, 190, 30, 2, "gameovertext"), 2, 2));
+    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(540, 210, 200, 80, 0.7f, "mainbutton"), GameOverToMain));
+    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(540, 290, 200, 80, 0.7f, "restartbutton"), RestartPlay));
 
     std::cout << "entering GameOverState\n";
 

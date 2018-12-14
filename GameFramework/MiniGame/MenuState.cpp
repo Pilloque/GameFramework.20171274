@@ -1,6 +1,7 @@
 #include "MenuState.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "UIBox.h"
 #include "MenuButton.h"
 #include "PlayState.h"
 #include <iostream>
@@ -10,6 +11,10 @@ const std::string MenuState::menuID = "MENU";
 
 bool MenuState::OnEnter()
 {
+    if (!TextureManager::Instance()->Load("../assets/title.png", "title"))
+    {
+        return false;
+    }
     if (!TextureManager::Instance()->Load("../assets/button.png", "playbutton"))
     {
         return false;
@@ -19,8 +24,9 @@ bool MenuState::OnEnter()
         return false;
     }
 
-    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(864 / 2 - 200, 120, 400, 100, "playbutton"), MenuToPlay));
-    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(864 / 2 - 200, 320, 400, 100, "exitbutton"), ExitFromMenu));
+    gameObjects.emplace_back(std::make_unique<UIBox>(LoaderParams(120, 100, 143, 135, 2, "title")));
+    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(450, 180, 400, 100, 0.7f, "playbutton"), MenuToPlay));
+    gameObjects.emplace_back(std::make_unique<MenuButton>(LoaderParams(450, 300, 400, 100, 0.7f, "exitbutton"), ExitFromMenu));
 
     std::cout << "entering MenuState\n";
 

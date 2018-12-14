@@ -8,7 +8,7 @@ Aim::Aim(const LoaderParams& pParams) : SDLGameObject(pParams)
 
 void Aim::Draw()
 {
-    TextureManager::Instance()->Draw(textureID, int(position.GetX() + 0.5f), int(position.GetY() + 0.5f), width, height, scale, SDL_FLIP_HORIZONTAL);
+    TextureManager::Instance()->Draw(textureID, int(position.GetX() + 0.5f) - 5 * scale, int(position.GetY() + 0.5f) - 5 * scale, width, height, scale, SDL_FLIP_NONE);
 }
 
 void Aim::Update()

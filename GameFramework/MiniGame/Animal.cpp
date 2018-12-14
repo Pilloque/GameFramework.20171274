@@ -8,14 +8,7 @@ Animal::Animal(const LoaderParams& pParams) : SDLGameObject(pParams)
 {
     state = FREE;
     enemy = nullptr;
-    if (rand() % 2 == 1)
-    {
-        velocity.SetX((rand() % 3) * 0.8f + 1.6f);
-    }
-    else
-    {
-        velocity.SetX(-((rand() % 3) * 0.8f + 1.6f));
-    }
+    SetVelocityRandom();
 }
 
 void Animal::Draw()
@@ -42,10 +35,24 @@ void Animal::Update()
         position = enemy->GetPosition() + Vector2D(0, 16);
         if (position.GetY() < -100)
         {
+            enemy->Destroy();
             Destroy();
             return;
         }
         break;
+    case DROP:
+        if (position.GetY() < 400.0f)
+        {
+            SDLGameObject::Update();
+        }
+        else
+        {
+            state = FREE;
+            acceleration.Zero();
+            velocity.Zero();
+            position.SetY(400.0f);
+            SetVelocityRandom();
+        }
     default:
         break;
     }
@@ -70,4 +77,23 @@ void Animal::HuntedBy(Enemy* enemy_)
     state = HUNTED;
     enemy = enemy_;
     velocity.Zero();
+}
+
+void Animal::Drop()
+{
+    state = DROP;
+    enemy = nullptr;
+    acceleration.SetY(0.4f);
+}
+
+inline void Animal::SetVelocityRandom()
+{
+    if (rand() % 2 == 1)
+    {
+        velocity.SetX((rand() % 3) * 0.8f + 1.6f);
+    }
+    else
+    {
+        velocity.SetX(-((rand() % 3) * 0.8f + 1.6f));
+    }
 }

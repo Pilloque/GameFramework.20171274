@@ -6,6 +6,7 @@
 #include "PlayState.h"
 #include <SDL_image.h>
 #include <iostream>
+#include <ctime>
 
 Game* Game::pInstance = nullptr;
 
@@ -30,6 +31,7 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
         }
 
         SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
+        srand((unsigned int)time(NULL));
 
         pGameStateMachine = new GameStateMachine();
         pGameStateMachine->ChangeState(MenuState::Instance());
@@ -57,13 +59,13 @@ void Game::Update()
 
 void Game::Quit()
 {
-	running = false;
+    running = false;
 }
 
 void Game::Clean()
 {
     std::cout << "cleaning game\n";
-	InputHandler::Instance()->Clean();
+    InputHandler::Instance()->Clean();
     SDL_DestroyWindow(pWindow);
     SDL_DestroyRenderer(pRenderer);
     SDL_Quit();
@@ -71,19 +73,19 @@ void Game::Clean()
 
 void Game::HandleEvents()
 {
-	static bool returnUp = true;
-	InputHandler::Instance()->Update();
+    static bool returnUp = true;
+    InputHandler::Instance()->Update();
     if (InputHandler::Instance()->IsKeyDown(SDL_SCANCODE_RETURN))
     {
-		if (returnUp)
-		{
-			pGameStateMachine->ChangeState(PlayState::Instance());
-			returnUp = false;
-		}
+        if (returnUp)
+        {
+            pGameStateMachine->ChangeState(PlayState::Instance());
+            returnUp = false;
+        }
     }
-	else
-	{
-		returnUp = true;
-	}
+    else
+    {
+        returnUp = true;
+    }
 
 }

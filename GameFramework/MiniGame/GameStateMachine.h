@@ -17,7 +17,6 @@ public:
 private:
     GameState* currentState = nullptr;
     GameState* prevState = nullptr;
-    std::vector<GameState*> gameStates;
 };
 
 #endif

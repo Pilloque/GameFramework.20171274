@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "TextureManager.h"
-#include "LoaderParams.h"
 #include "InputHandler.h"
 #include "MenuState.h"
 #include "PlayState.h"

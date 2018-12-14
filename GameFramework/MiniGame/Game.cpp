@@ -30,6 +30,7 @@ bool Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
             pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
         }
 
+        SDL_RenderSetLogicalSize(pRenderer, 864, 540);
         SDL_SetRenderDrawColor(pRenderer, 0, 40, 60, 255);
         srand((unsigned int)time(NULL));
 
